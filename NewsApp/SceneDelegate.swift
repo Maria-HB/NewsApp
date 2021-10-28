@@ -21,6 +21,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         //create your root view controller and add it to a navigation controller
         let newsListViewController = NewsListViewController()
+        
+        //initialize news list view model
+        newsListViewController.viewModel = NewsListViewModel(dataManager: NewsDataManager(remoteDataManager: RemoteNewsDataManager()), delegate: newsListViewController)
+        
         let navigationController = UINavigationController(rootViewController: newsListViewController)
         
         //add the navigation controller to the window's root view controller

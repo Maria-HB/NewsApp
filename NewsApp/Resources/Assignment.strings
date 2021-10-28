@@ -1,0 +1,11 @@
+/* 
+  Constants.strings
+  NewsApp
+
+  Created by Maria Habib on 28/10/2021.
+  
+*/
+
+"News-Screen-Title" = "NEWS";
+"No-News-Available" = "No News Found";
+"Generic-Error-Message" = "Something went wrong. Please try again.";
