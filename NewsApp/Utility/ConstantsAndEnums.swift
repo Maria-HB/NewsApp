@@ -11,7 +11,7 @@ import UIKit
 let contentSpacing: CGFloat = 16
 
 struct Constants {
-    static let topHeadlinesURL = URL(string: "https://newsapi.org/v2/everything?q=Apple&from=2021-10-28&sortBy=popularity&apiKey=191e210456a84b36b96e18e8f129ba99")
+    static let topHeadlinesURL = URL(string: "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=191e210456a84b36b96e18e8f129ba99")
 }
 
 enum CustomError: Error {
