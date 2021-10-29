@@ -19,7 +19,8 @@ class NewsTableViewCell: BaseTableViewCell {
     
     private var thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 10
         imageView.backgroundColor = .secondarySystemBackground
         
@@ -30,7 +31,7 @@ class NewsTableViewCell: BaseTableViewCell {
         let label = UILabel()
         label.textColor = .black
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         
         return label
     }()
@@ -39,7 +40,7 @@ class NewsTableViewCell: BaseTableViewCell {
         let label = UILabel()
         label.textColor = .darkGray
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 12)
         
         return label
     }()
@@ -88,10 +89,24 @@ class NewsTableViewCell: BaseTableViewCell {
     }
     
     private func bind() {
-        titleLabel.text = viewModel.titleText
-        descriptionLabel.text = viewModel.description
-        
+       self.titleLabel.text = self.viewModel.titleText
+       self.descriptionLabel.text = self.viewModel.description
         //set image later
+        if let data = viewModel.imageData {
+                self.thumbnailImageView.image = UIImage(data: data)
+        } else if let url = viewModel.imageURL {
+            
+            NetworkManager.urlRequest(url: url) { result in
+                switch result {
+                case .success(let data):
+                    DispatchQueue.main.async {
+                        self.thumbnailImageView.image = UIImage(data: data)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
     }
 
 }

@@ -8,7 +8,8 @@
 import Foundation
 
 struct NewsCellViewModel {
-    var imageURL: String?
+    var imageURL: URL?
+    var imageData: Data? = nil
     var titleText: String?
     var description: String?
     
@@ -19,7 +20,7 @@ struct NewsCellViewModel {
     }
     
     init(news: Article) {
-        imageURL = news.urlToImage
+        imageURL = URL(string: news.urlToImage)
         titleText = news.title
         description = news.description
     }

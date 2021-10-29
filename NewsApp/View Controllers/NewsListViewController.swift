@@ -58,7 +58,6 @@ class NewsListViewController: UIViewController {
         self.newsTableView.separatorStyle = .none
         self.newsTableView.allowsSelection = false
         self.newsTableView.dataSource = self
-        self.newsTableView.delegate = self
     }
     
     private func configureNoResultLabel() {
@@ -114,12 +113,6 @@ extension NewsListViewController: UITableViewDataSource {
     }
 }
 
-//MARK: - UITableViewDelegate
-extension NewsListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = indexPath.row % 2 == 0 ? .tertiarySystemGroupedBackground : .white
-    }
-}
 
 
 
