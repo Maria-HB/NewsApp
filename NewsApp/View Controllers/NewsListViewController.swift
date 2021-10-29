@@ -42,7 +42,7 @@ class NewsListViewController: UIViewController {
         
         self.view.addSubview(self.noResultLabel)
         self.view.addSubview(self.newsTableView)
-        
+    
         self.configureTableView()
         self.configureNoResultLabel()
     }
@@ -58,6 +58,10 @@ class NewsListViewController: UIViewController {
         self.newsTableView.separatorStyle = .none
         self.newsTableView.allowsSelection = false
         self.newsTableView.dataSource = self
+        
+        //add pull to refresh control
+        self.newsTableView.refreshControl = UIRefreshControl()
+        self.newsTableView.refreshControl?.addTarget(self, action: #selector(callPullToRefresh), for: .valueChanged)
     }
     
     private func configureNoResultLabel() {
@@ -69,19 +73,30 @@ class NewsListViewController: UIViewController {
         self.noResultLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: contentSpacing).isActive = true
         self.noResultLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
     }
+    
+    @objc func callPullToRefresh() {
+        //reload the virew model
+        self.viewModel.load()
+    }
 }
 
 //MARK: - NewsListViewModelDelegate
 extension NewsListViewController: NewsListViewModelDelegate {
     func didStartLoading() {
-         //show activity indicator
-        self.startActivityIndicator()
+         //show activity indicator in case pull to refresh is not being called
+        if self.newsTableView.refreshControl?.isRefreshing != true {
+            self.startActivityIndicator()
+        }
     }
     
     func didFinishLoading() {
         DispatchQueue.main.async {
             //hide activity indicator
-            self.stopActivityIndicator()
+            if self.newsTableView.refreshControl?.isRefreshing != true {
+                self.stopActivityIndicator()
+            } else {
+                self.newsTableView.refreshControl?.endRefreshing()
+            }
             self.noResultLabel.isHidden = self.viewModel.numberOfNewsItems() != 0
             self.newsTableView.isHidden = self.viewModel.numberOfNewsItems() == 0
             self.newsTableView.reloadData()
@@ -90,7 +105,11 @@ extension NewsListViewController: NewsListViewModelDelegate {
     
     func didFailLoading(message: String) {
         //hide activity indicator
-        self.stopActivityIndicator()
+        if self.newsTableView.refreshControl?.isRefreshing != true {
+            self.stopActivityIndicator()
+        } else {
+            self.newsTableView.refreshControl?.endRefreshing()
+        }
         //show alert with error message
         self.showAlert(message: message, title: nil)
     }
