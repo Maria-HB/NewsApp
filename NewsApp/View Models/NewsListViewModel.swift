@@ -41,8 +41,8 @@ class NewsListViewModel: NewsListViewModelProtocol {
         dataManager.loadNews { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let apiResponse):
-                self.newsArray = apiResponse.articles
+            case .success(let articles):
+                self.newsArray = articles
                 self.delegate?.didFinishLoading()
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")

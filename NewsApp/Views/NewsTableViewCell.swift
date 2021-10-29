@@ -20,6 +20,8 @@ class NewsTableViewCell: BaseTableViewCell {
     private var thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 10
+        imageView.backgroundColor = .secondarySystemBackground
         
         return imageView
     }()
@@ -52,6 +54,13 @@ class NewsTableViewCell: BaseTableViewCell {
         return stackView
     }()
 
+    override func prepareForReuse() {
+         super.prepareForReuse()
+        self.titleLabel .text = nil
+        self.descriptionLabel.text = nil
+        self.thumbnailImageView.image = nil
+    }
+    
     override func configureUI() {
         self.backgroundColor = .clear
         self.contentView.backgroundColor = .clear
@@ -61,10 +70,11 @@ class NewsTableViewCell: BaseTableViewCell {
         self.thumbnailImageView.translatesAutoresizingMaskIntoConstraints = false
         self.detailsStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.thumbnailImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
+        self.thumbnailImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: contentSpacing).isActive = true
         self.thumbnailImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        self.thumbnailImageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        self.thumbnailImageView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
+        self.thumbnailImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+       // self.thumbnailImageView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
+        self.thumbnailImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: contentSpacing).isActive = true
         
         self.detailsStackView.addArrangedSubview(titleLabel)
         self.detailsStackView.addArrangedSubview(descriptionLabel)

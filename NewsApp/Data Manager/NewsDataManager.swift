@@ -8,13 +8,13 @@
 import Foundation
 
 protocol NewsDataManagerProtocol {
-    func loadNews(completion: @escaping (Swift.Result<APIResponse, Error>) -> Void)
+    func loadNews(completion: @escaping (Swift.Result<[Article], Error>) -> Void)
 }
 
 struct NewsDataManager: NewsDataManagerProtocol {
     var remoteDataManager: NewsDataManagerProtocol!
     
-    func loadNews(completion: @escaping (Result<APIResponse, Error>) -> Void) {
+    func loadNews(completion: @escaping (Result<[Article], Error>) -> Void) {
         remoteDataManager.loadNews(completion: completion)
     }
 }

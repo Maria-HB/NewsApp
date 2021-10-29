@@ -75,12 +75,14 @@ class NewsListViewController: UIViewController {
 //MARK: - NewsListViewModelDelegate
 extension NewsListViewController: NewsListViewModelDelegate {
     func didStartLoading() {
-         //show progress bar
+         //show activity indicator
+        self.startActivityIndicator()
     }
     
     func didFinishLoading() {
         DispatchQueue.main.async {
-            //hide progress bar
+            //hide activity indicator
+            self.stopActivityIndicator()
             self.noResultLabel.isHidden = self.viewModel.numberOfNewsItems() != 0
             self.newsTableView.isHidden = self.viewModel.numberOfNewsItems() == 0
             self.newsTableView.reloadData()
@@ -88,9 +90,10 @@ extension NewsListViewController: NewsListViewModelDelegate {
     }
     
     func didFailLoading(message: String) {
-        //hide progress bar
+        //hide activity indicator
+        self.stopActivityIndicator()
         //show alert with error message
-        print(message)
+        self.showAlert(message: message, title: nil)
     }
 }
 

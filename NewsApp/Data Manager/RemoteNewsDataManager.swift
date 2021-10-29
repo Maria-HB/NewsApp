@@ -9,8 +9,8 @@ import Foundation
 
 struct RemoteNewsDataManager: NewsDataManagerProtocol {
     //func to load news
-    func loadNews(completion: @escaping (Result<APIResponse, Error>) -> Void) {
-        guard let url = Constants.topHeadlinesURL else {
+    func loadNews(completion: @escaping (Result<[Article], Error>) -> Void) {
+        guard let url = APIPath.topHeadlinesURL else {
             completion(.failure(CustomError.invalidURL))
             return
         }
@@ -20,7 +20,7 @@ struct RemoteNewsDataManager: NewsDataManagerProtocol {
             case .success(let data):
                 do {
                     let result = try JSONDecoder().decode(APIResponse.self, from: data)
-                    completion(.success(result))
+                    completion(.success(result.articles))
                 } catch {
                     completion(.failure(error))
                 }
