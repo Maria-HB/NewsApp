@@ -22,8 +22,8 @@ extension UIViewController {
     
     //MARK: - Global Activity Indicator
     func startActivityIndicator() {
-        self.view.isUserInteractionEnabled = false
         DispatchQueue.main.async {
+            self.view.isUserInteractionEnabled = false
             let activityIndicator = UIActivityIndicatorView(style: .large)
             activityIndicator.tag = self.activityIndicatorTag
             activityIndicator.center = self.view.center
@@ -34,8 +34,8 @@ extension UIViewController {
     }
     
     func stopActivityIndicator() {
-        self.view.isUserInteractionEnabled = true
         DispatchQueue.main.async {
+            self.view.isUserInteractionEnabled = true
             if let activityIndicator = self.view.subviews.filter({$0.tag == self.activityIndicatorTag}).first as? UIActivityIndicatorView {
                 activityIndicator.stopAnimating()
                 activityIndicator.removeFromSuperview()

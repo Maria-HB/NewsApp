@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class NewsListViewController: UIViewController {
     
@@ -56,8 +57,9 @@ class NewsListViewController: UIViewController {
         
         self.newsTableView.register(NewsTableViewCell.self, forCellReuseIdentifier: NewsTableViewCell.identifier)
         self.newsTableView.separatorStyle = .none
-        self.newsTableView.allowsSelection = false
+        self.newsTableView.allowsSelection = true
         self.newsTableView.dataSource = self
+        self.newsTableView.delegate = self
         
         //add pull to refresh control
         self.newsTableView.refreshControl = UIRefreshControl()
@@ -82,6 +84,7 @@ class NewsListViewController: UIViewController {
 
 //MARK: - NewsListViewModelDelegate
 extension NewsListViewController: NewsListViewModelDelegate {
+    
     func didStartLoading() {
          //show activity indicator in case pull to refresh is not being called
         if self.newsTableView.refreshControl?.isRefreshing != true {
@@ -104,14 +107,16 @@ extension NewsListViewController: NewsListViewModelDelegate {
     }
     
     func didFailLoading(message: String) {
-        //hide activity indicator
-        if self.newsTableView.refreshControl?.isRefreshing != true {
-            self.stopActivityIndicator()
-        } else {
-            self.newsTableView.refreshControl?.endRefreshing()
+        DispatchQueue.main.async {
+            //hide activity indicator
+            if self.newsTableView.refreshControl?.isRefreshing != true {
+                self.stopActivityIndicator()
+            } else {
+                self.newsTableView.refreshControl?.endRefreshing()
+            }
+            //show alert with error message
+            self.showAlert(message: message, title: nil)
         }
-        //show alert with error message
-        self.showAlert(message: message, title: nil)
     }
 }
 
@@ -132,6 +137,19 @@ extension NewsListViewController: UITableViewDataSource {
     }
 }
 
+extension NewsListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let selectedArticle = self.viewModel.selectedNewsItem(index: indexPath.row)
+        
+        guard let url = URL(string: selectedArticle.url) else {
+            return
+        }
+        
+        let detailsViewController = SFSafariViewController(url: url)
+        present(detailsViewController, animated: true)
+    }
+}
 
 
 
