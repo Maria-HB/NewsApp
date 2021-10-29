@@ -10,29 +10,26 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var coordinator: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        //get the window scene
+        
+        //modifiying code to add an app coordinator for controlling app flow
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        //create a new window using the window scene constructor
         let window = UIWindow(windowScene: windowScene)
         
-        //create your root view controller and add it to a navigation controller
-        let newsListViewController = NewsListViewController()
+        let navigationController = UINavigationController()
         
-        //initialize news list view model
-        newsListViewController.viewModel = NewsListViewModel(dataManager: NewsDataManager(remoteDataManager: RemoteNewsDataManager()), delegate: newsListViewController)
+        coordinator = AppCoordinator(navigationController: navigationController)
         
-        let navigationController = UINavigationController(rootViewController: newsListViewController)
+        coordinator?.start()
         
-        //add the navigation controller to the window's root view controller
         window.rootViewController = navigationController
         
-        //make the window visible
         self.window = window
         window.makeKeyAndVisible()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

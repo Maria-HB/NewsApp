@@ -8,5 +8,5 @@
 import Foundation
 
 struct APIPath {
-    static let topHeadlinesURL = URL(string: "https://newsapi.org/v2/top-headlines?country=us&apiKey=191e210456a84b36b96e18e8f129ba99")
+    static let topHeadlinesURL = URL(string: "https://newsapi.org/v2/everything?q=apple&apiKey=191e210456a84b36b96e18e8f129ba99")
 }

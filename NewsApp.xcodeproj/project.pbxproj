@@ -29,6 +29,9 @@
 		5DAE474D272B81C30063AF3B /* APIPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE474C272B81C30063AF3B /* APIPath.swift */; };
 		5DAE4750272B82130063AF3B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE474F272B82130063AF3B /* UIViewController+Extension.swift */; };
 		5DAE4752272BACB50063AF3B /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE4751272BACB50063AF3B /* UIImageView+Extension.swift */; };
+		5DAE4755272C32C00063AF3B /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE4754272C32C00063AF3B /* AppCoordinator.swift */; };
+		5DAE4757272C37340063AF3B /* NewsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE4756272C37340063AF3B /* NewsDetailViewController.swift */; };
+		5DAE475A272C43330063AF3B /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DAE4759272C43330063AF3B /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +78,9 @@
 		5DAE474C272B81C30063AF3B /* APIPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIPath.swift; sourceTree = "<group>"; };
 		5DAE474F272B82130063AF3B /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		5DAE4751272BACB50063AF3B /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		5DAE4754272C32C00063AF3B /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		5DAE4756272C37340063AF3B /* NewsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailViewController.swift; sourceTree = "<group>"; };
+		5DAE4759272C43330063AF3B /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DAE475A272C43330063AF3B /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +116,7 @@
 				5D20E110272A6ABB00096CC6 /* NewsAppTests */,
 				5D20E11A272A6ABB00096CC6 /* NewsAppUITests */,
 				5D20E0F8272A6AB700096CC6 /* Products */,
+				5DAE4758272C43330063AF3B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,10 +135,11 @@
 			children = (
 				5D20E0FC272A6AB700096CC6 /* SceneDelegate.swift */,
 				5D20E0FA272A6AB700096CC6 /* AppDelegate.swift */,
-				5D20E130272A966800096CC6 /* Views */,
-				5D20E12A272A954400096CC6 /* View Controllers */,
-				5D20E12E272A964800096CC6 /* View Models */,
+				5DAE4753272C32A90063AF3B /* Coordinator */,
 				5D20E12F272A965700096CC6 /* Models */,
+				5D20E130272A966800096CC6 /* Views */,
+				5D20E12E272A964800096CC6 /* View Models */,
+				5D20E12A272A954400096CC6 /* View Controllers */,
 				5D20E131272AB04400096CC6 /* Data Manager */,
 				5D20E13B272AB34D00096CC6 /* Network Manager */,
 				5DAE474E272B81EF0063AF3B /* Extensions */,
@@ -164,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				5D20E0FE272A6AB700096CC6 /* NewsListViewController.swift */,
+				5DAE4756272C37340063AF3B /* NewsDetailViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -236,6 +246,22 @@
 				5DAE4751272BACB50063AF3B /* UIImageView+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5DAE4753272C32A90063AF3B /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				5DAE4754272C32C00063AF3B /* AppCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		5DAE4758272C43330063AF3B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5DAE4759272C43330063AF3B /* WebKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -371,9 +397,11 @@
 			files = (
 				5D20E137272AB1FE00096CC6 /* Article.swift in Sources */,
 				5D20E143272ABC3100096CC6 /* String+Extension.swift in Sources */,
+				5DAE4755272C32C00063AF3B /* AppCoordinator.swift in Sources */,
 				5D20E13A272AB2E900096CC6 /* ConstantsAndEnums.swift in Sources */,
 				5DAE4750272B82130063AF3B /* UIViewController+Extension.swift in Sources */,
 				5D20E13F272ABA4400096CC6 /* NewsListViewModel.swift in Sources */,
+				5DAE4757272C37340063AF3B /* NewsDetailViewController.swift in Sources */,
 				5D20E147272AC2EF00096CC6 /* NewsTableViewCell.swift in Sources */,
 				5D20E145272AC28100096CC6 /* BaseTableViewCell.swift in Sources */,
 				5D20E133272AB07400096CC6 /* RemoteNewsDataManager.swift in Sources */,

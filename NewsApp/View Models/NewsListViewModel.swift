@@ -15,6 +15,7 @@ protocol NewsListViewModelProtocol {
     func load()
     func numberOfNewsItems() -> Int
     func cellViewModel(for index: Int) -> NewsCellViewModel
+    func cellSelected(index: Int)
     func selectedNewsItem(index: Int) -> Article
 }
 
@@ -22,6 +23,7 @@ protocol NewsListViewModelDelegate: AnyObject {
     func didStartLoading()
     func didFinishLoading()
     func didFailLoading(message: String)
+    func displayDetails(newsArticle: Article)
 }
 
 class NewsListViewModel: NewsListViewModelProtocol {
@@ -71,6 +73,15 @@ class NewsListViewModel: NewsListViewModelProtocol {
         }
         
         return self.newsArray[index]
+    }
+    
+    func cellSelected(index: Int) {
+        guard index < self.newsArray.count else {
+            print("Indexpath greater that gift card count")
+            return
+        }
+        
+        self.delegate?.displayDetails(newsArticle: self.newsArray[index])
     }
     
 }

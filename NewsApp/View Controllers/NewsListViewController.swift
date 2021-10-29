@@ -27,6 +27,7 @@ class NewsListViewController: UIViewController {
     }()
     
     var viewModel: NewsListViewModelProtocol!
+    var coordinator: Coordinator!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,6 +119,10 @@ extension NewsListViewController: NewsListViewModelDelegate {
             self.showAlert(message: message, title: nil)
         }
     }
+    
+    func displayDetails(newsArticle: Article) {
+        coordinator.newsArticleSelected(article: newsArticle)
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -144,14 +149,7 @@ extension NewsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let selectedArticle = self.viewModel.selectedNewsItem(index: indexPath.row)
-        
-        guard let url = URL(string: selectedArticle.url) else {
-            return
-        }
-        
-        let detailsViewController = SFSafariViewController(url: url)
-        present(detailsViewController, animated: true)
+        self.viewModel.cellSelected(index: indexPath.row)
     }
 }
 
