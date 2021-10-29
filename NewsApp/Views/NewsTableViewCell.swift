@@ -74,7 +74,6 @@ class NewsTableViewCell: BaseTableViewCell {
         self.thumbnailImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: contentSpacing).isActive = true
         self.thumbnailImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         self.thumbnailImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-       // self.thumbnailImageView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
         self.thumbnailImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: contentSpacing).isActive = true
         
         self.detailsStackView.addArrangedSubview(titleLabel)
@@ -89,24 +88,11 @@ class NewsTableViewCell: BaseTableViewCell {
     }
     
     private func bind() {
-       self.titleLabel.text = self.viewModel.titleText
-       self.descriptionLabel.text = self.viewModel.description
+        self.titleLabel.text = self.viewModel.titleText
+        self.descriptionLabel.text = self.viewModel.description
         //set image later
-        if let data = viewModel.imageData {
-                self.thumbnailImageView.image = UIImage(data: data)
-        } else if let url = viewModel.imageURL {
-            
-            NetworkManager.urlRequest(url: url) { result in
-                switch result {
-                case .success(let data):
-                    DispatchQueue.main.async {
-                        self.thumbnailImageView.image = UIImage(data: data)
-                    }
-                case .failure(let error):
-                    print(error)
-                }
-            }
+        if let url = viewModel.imageURL {
+            self.thumbnailImageView.loadImageUsingCacheWith(url: url)
         }
     }
-
 }

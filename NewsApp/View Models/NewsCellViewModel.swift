@@ -9,7 +9,6 @@ import Foundation
 
 struct NewsCellViewModel {
     var imageURL: URL?
-    var imageData: Data? = nil
     var titleText: String?
     var description: String?
     

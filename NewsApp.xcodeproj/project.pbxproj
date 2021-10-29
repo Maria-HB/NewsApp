@@ -28,6 +28,7 @@
 		5D20E147272AC2EF00096CC6 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D20E146272AC2EF00096CC6 /* NewsTableViewCell.swift */; };
 		5DAE474D272B81C30063AF3B /* APIPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE474C272B81C30063AF3B /* APIPath.swift */; };
 		5DAE4750272B82130063AF3B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE474F272B82130063AF3B /* UIViewController+Extension.swift */; };
+		5DAE4752272BACB50063AF3B /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE4751272BACB50063AF3B /* UIImageView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		5D20E146272AC2EF00096CC6 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		5DAE474C272B81C30063AF3B /* APIPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIPath.swift; sourceTree = "<group>"; };
 		5DAE474F272B82130063AF3B /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		5DAE4751272BACB50063AF3B /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +233,7 @@
 			children = (
 				5D20E142272ABC3100096CC6 /* String+Extension.swift */,
 				5DAE474F272B82130063AF3B /* UIViewController+Extension.swift */,
+				5DAE4751272BACB50063AF3B /* UIImageView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				5D20E133272AB07400096CC6 /* RemoteNewsDataManager.swift in Sources */,
 				5D20E135272AB13300096CC6 /* NewsDataManager.swift in Sources */,
 				5D20E13D272AB36500096CC6 /* NetworkManager.swift in Sources */,
+				5DAE4752272BACB50063AF3B /* UIImageView+Extension.swift in Sources */,
 				5D20E0FF272A6AB700096CC6 /* NewsListViewController.swift in Sources */,
 				5D20E0FB272A6AB700096CC6 /* AppDelegate.swift in Sources */,
 				5DAE474D272B81C30063AF3B /* APIPath.swift in Sources */,
