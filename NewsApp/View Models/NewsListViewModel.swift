@@ -16,7 +16,6 @@ protocol NewsListViewModelProtocol {
     func numberOfNewsItems() -> Int
     func cellViewModel(for index: Int) -> NewsCellViewModel
     func cellSelected(index: Int)
-    func selectedNewsItem(index: Int) -> Article
 }
 
 protocol NewsListViewModelDelegate: AnyObject {
@@ -65,14 +64,6 @@ class NewsListViewModel: NewsListViewModelProtocol {
         }
         
         return NewsCellViewModel(news: self.newsArray[index])
-    }
-    
-    func selectedNewsItem(index: Int) -> Article {
-        if index < self.newsArray.count {
-            print("Indexpath greater that gift card count")
-        }
-        
-        return self.newsArray[index]
     }
     
     func cellSelected(index: Int) {

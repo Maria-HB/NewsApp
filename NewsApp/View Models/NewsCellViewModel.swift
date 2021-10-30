@@ -11,8 +11,6 @@ struct NewsCellViewModel {
     var imageURL: URL?
     var titleText: String?
     var description: String?
-    
-    var placeHolderImageName: String = "image-not-available"
 
     init() {
         //Empty Initializer

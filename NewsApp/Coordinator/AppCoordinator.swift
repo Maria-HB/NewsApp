@@ -9,16 +9,13 @@ import Foundation
 import UIKit
 
 protocol Coordinator {
-    var childCoordinators: [Coordinator] { get set }
     var navigationController: UINavigationController { get set }
-    
     func start()
     func newsArticleSelected(article: Article)
 }
 
 
 class AppCoordinator: Coordinator {
-    var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {

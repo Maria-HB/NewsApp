@@ -17,7 +17,7 @@ class NewsDetailViewController: UINavigationController  {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.configureUI()
+        self.configureView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -26,7 +26,7 @@ class NewsDetailViewController: UINavigationController  {
         self.webView.stopLoading()
     }
 
-    private func configureUI() {
+    private func configureView() {
         self.view.backgroundColor = .white
         
         self.webView = WKWebView()
@@ -36,10 +36,7 @@ class NewsDetailViewController: UINavigationController  {
         self.webView.allowsBackForwardNavigationGestures = true
         
         if let article = self.selectedNewsArticle {
-            guard let url = URL(string: article.url) else {
-                return
-            }
-            
+            guard let url = URL(string: article.url) else { return }
             let urlRequest: URLRequest = URLRequest(url: url)
             self.webView.load(urlRequest)
         }
