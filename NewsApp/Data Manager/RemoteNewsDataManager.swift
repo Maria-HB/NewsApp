@@ -12,7 +12,6 @@ struct RemoteNewsDataManager: NewsDataManagerProtocol {
     func loadNewsFor(pageNo: Int, completion: @escaping (Result<APIResponse, Error>) -> Void) {
         //update API Path to include page no
         let urlString = (APIPath.topHeadlinesURL?.absoluteString ?? "") + "&page=\(pageNo)"
-        
         guard let url = URL(string: urlString) else {
             completion(.failure(CustomError.invalidURL))
             return
