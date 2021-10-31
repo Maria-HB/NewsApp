@@ -55,6 +55,18 @@ class NewsListViewModel: NewsListViewModelProtocol {
         self.currentPage += 1
     }
     
+    func calculateTotalNoOfPages(for totalResults:Int) -> Int {
+        let quotient = totalResults / defaultPageSize
+        let remainder =  totalResults % defaultPageSize
+        if remainder != 0 {
+            self.totalNoOfPages = quotient + 1
+        } else {
+            self.totalNoOfPages = quotient
+        }
+        
+        return self.totalNoOfPages
+    }
+    
     func load() {
         guard self.currentPage <= self.totalNoOfPages else {
             self.delegate?.noMorePagesToFetchRemoveSpinnerView()
@@ -68,14 +80,8 @@ class NewsListViewModel: NewsListViewModelProtocol {
             case .success(let apiResponse):
                 self.newsArray.append(contentsOf: apiResponse.articles)
                 //calculate total no of pages returned
-                let totalResults = apiResponse.totalResults
-                let quotient = totalResults / defaultPageSize
-                let remainder =  totalResults % defaultPageSize
-                if remainder != 0 {
-                    self.totalNoOfPages = quotient + 1
-                } else {
-                    self.totalNoOfPages = quotient
-                }
+                print(apiResponse.totalResults)
+                let _ = self.calculateTotalNoOfPages(for: apiResponse.totalResults)
                 self.delegate?.didFinishLoading()
                 self.isPaginating = false
                 self.updateCurrentPageNo()
