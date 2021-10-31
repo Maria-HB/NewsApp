@@ -79,6 +79,7 @@ class NewsListViewController: UIViewController {
     
     @objc func callPullToRefresh() {
         //reload the virew model
+        self.viewModel.resetPageNoAndTotalNoOfPages()
         self.viewModel.load()
     }
 }
@@ -101,6 +102,10 @@ extension NewsListViewController: NewsListViewModelDelegate {
             } else {
                 self.newsTableView.refreshControl?.endRefreshing()
             }
+            
+            //hide table view footer
+            self.newsTableView.tableFooterView = nil
+            
             self.noResultLabel.isHidden = self.viewModel.numberOfNewsItems() != 0
             self.newsTableView.isHidden = self.viewModel.numberOfNewsItems() == 0
             self.newsTableView.reloadData()
@@ -115,8 +120,18 @@ extension NewsListViewController: NewsListViewModelDelegate {
             } else {
                 self.newsTableView.refreshControl?.endRefreshing()
             }
+            
+            //hide table view footer
+            self.newsTableView.tableFooterView = nil
+            
             //show alert with error message
             self.showAlert(message: message, title: nil)
+        }
+    }
+    
+    func noMorePagesToFetchRemoveSpinnerView() {
+        DispatchQueue.main.async {
+            self.newsTableView.tableFooterView = nil
         }
     }
     
@@ -142,6 +157,7 @@ extension NewsListViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - UITableViewDelegate
 extension NewsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
@@ -153,5 +169,31 @@ extension NewsListViewController: UITableViewDelegate {
     }
 }
 
+//MARK: - UIScrollViewDelegate
+extension NewsListViewController: UIScrollViewDelegate {
+    
+    private func createSpinnerView() -> UIView {
+        let footerView = UIView(frame:CGRect(x: 0, y: 0, width: self.view.frame.width, height: 100))
+        
+        let spinner = UIActivityIndicatorView()
+        spinner.center = footerView.center
+        footerView.addSubview(spinner)
+        spinner.startAnimating()
+        
+        return footerView
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let position = scrollView.contentOffset.y
+        if position > (self.newsTableView.contentSize.height - scrollView.frame.size.height - 50) {
+            //fetch more data - if already fetching return
+            guard !viewModel.isPaginating else { return }
+            //add footer view to table view
+            self.newsTableView.tableFooterView = self.createSpinnerView()
+            self.viewModel.load()
+
+        }
+    }
+}
 
 

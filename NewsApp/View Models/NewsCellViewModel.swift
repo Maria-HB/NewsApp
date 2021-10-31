@@ -17,7 +17,7 @@ struct NewsCellViewModel {
     }
     
     init(news: Article) {
-        imageURL = URL(string: news.urlToImage)
+        imageURL = URL(string: news.urlToImage ?? "")
         titleText = news.title
         description = news.description
     }

@@ -12,7 +12,9 @@ protocol NewsListViewModelProtocol {
     var noResultMessage: String { get }
     var dataManager: NewsDataManagerProtocol { get set }
     var delegate: NewsListViewModelDelegate? { get set }
+    var isPaginating: Bool { get }
     func load()
+    func resetPageNoAndTotalNoOfPages()
     func numberOfNewsItems() -> Int
     func cellViewModel(for index: Int) -> NewsCellViewModel
     func cellSelected(index: Int)
@@ -22,6 +24,7 @@ protocol NewsListViewModelDelegate: AnyObject {
     func didStartLoading()
     func didFinishLoading()
     func didFailLoading(message: String)
+    func noMorePagesToFetchRemoveSpinnerView()
     func displayDetails(newsArticle: Article)
 }
 
@@ -32,22 +35,53 @@ class NewsListViewModel: NewsListViewModelProtocol {
     weak var delegate: NewsListViewModelDelegate?
     
     var newsArray: [Article] = [Article]()
+    var totalNoOfPages: Int = 1
+    var currentPage: Int = 1
+    var isPaginating = false
     
     init(dataManager: NewsDataManagerProtocol, delegate: NewsListViewModelDelegate?) {
         self.dataManager = dataManager
         self.delegate = delegate
     }
     
+    func resetPageNoAndTotalNoOfPages() {
+        self.currentPage = 1
+        self.totalNoOfPages = 1
+        //remove all news articles from news array
+        self.newsArray.removeAll()
+    }
+    
+    func updateCurrentPageNo() {
+        self.currentPage += 1
+    }
+    
     func load() {
+        guard self.currentPage <= self.totalNoOfPages else {
+            self.delegate?.noMorePagesToFetchRemoveSpinnerView()
+            return
+        }
+        self.isPaginating = true
         self.delegate?.didStartLoading()
-        dataManager.loadNews { [weak self] result in
+        dataManager.loadNewsFor(pageNo: currentPage) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let articles):
-                self.newsArray = articles
+            case .success(let apiResponse):
+                self.newsArray.append(contentsOf: apiResponse.articles)
+                //calculate total no of pages returned
+                let totalResults = apiResponse.totalResults
+                let quotient = totalResults / defaultPageSize
+                let remainder =  totalResults % defaultPageSize
+                if remainder != 0 {
+                    self.totalNoOfPages = quotient + 1
+                } else {
+                    self.totalNoOfPages = quotient
+                }
                 self.delegate?.didFinishLoading()
+                self.isPaginating = false
+                self.updateCurrentPageNo()
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
+                self.isPaginating = false
                 self.delegate?.didFailLoading(message: "Generic-Error-Message".localizedString())
             }
         }

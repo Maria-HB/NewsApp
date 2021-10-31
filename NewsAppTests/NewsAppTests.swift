@@ -115,7 +115,7 @@ extension NewsAppTests: NewsListViewModelDelegate {
         didFailLoadingCalledExpection.fulfill()
     }
     
-    func displayDetails(newsArticle: Article) {
+    func displayDetails(newsArticle: APIResponse) {
         //Not tested
     }
 }

@@ -8,4 +8,4 @@
 
 "News-Screen-Title" = "NEWS";
 "No-News-Available" = "No News Found";
-"Generic-Error-Message" = "Something went wrong. Please try again.";
+"Generic-Error-Message" = "News articles could not be loaded. Please try again.";

@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 let contentSpacing: CGFloat = 16
+let defaultPageSize: Int = 20
 
 enum CustomError: Error {
     case invalidURL
