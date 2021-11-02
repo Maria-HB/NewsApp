@@ -1,6 +1,6 @@
 # NewsApp
  A test app to fetch news from a public API.
- Loads news' detials in a web view.
+ Loads news' details in a web view.
  Includes pull to refresh and pagination to load more news at the end of the table view.
  Uses MVVM-C pattern.
 
